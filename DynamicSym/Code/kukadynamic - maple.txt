@@ -1,0 +1,177 @@
+with(LinearAlgebra):
+with(MTM):
+with(linalg):
+q:=Vector[column]([q1,q2,q3,q4,q5,q6,q7]):
+dq:=Vector[column]([dq1,dq2,dq3,dq4,dq5,dq6,dq7]):
+#ri:=Vector[column]([-0.31/2,0.1,0.3,-0.39/4,0.75*0.39,0,0.05]):
+#rm:=Vector[column]([0,0,0,0,0,0,0]):
+#d3:=0.4:d5:=0.39:
+#kr1:=100:kr2:=100:kr3:=100:kr4:=100:kr5:=100:kr6:=100:kr7:=100:
+#m1:=0.7:m2:=0.7:m3:=0.7:m4:=0.7:m5:=0.7:m6:=0.7:m7:=0.7:
+#M1:=0.7:M2:=0.7:M3:=0.7:M4:=0.7:M5:=0.7:M6:=0.7:M7:=0.7:
+#I1:=10:I2:=10:I3:=10:I4:=10:I5:=10:I6:=10:I7:=10:
+#IM1:=10:IM2:=10:IM3:=10:IM4:=10:IM5:=10:IM6:=10:IM7:=10:
+g0:=Vector[column]([0,0,-9.8]):
+f:=Vector[column]([Pi/2,-Pi/2,-Pi/2,Pi/2,Pi/2,-Pi/2,0]):
+a:=Vector[column]([0,0,0,0,0,0,0]):
+d:=Vector[column]([0,0,d3,0,d5,0,0]):
+t:=Vector[column]([q1,q2,q3,q4,q5,q6,q7]):
+#Transformation Matrix i about i-1
+A1:=Matrix([[cos(t(1,1)),-sin(t(1,1))*cos(f(1,1)),sin(t(1,1))*sin(f(1,1)),a(1,1)*cos(t(1,1))],[sin(t(1,1)),cos(t(1,1))*cos(f(1,1)),-cos(t(1,1))*sin(f(1,1)),a(1,1)*sin(t(1,1))],[0,sin(f(1,1)),cos(f(1,1)),d(1,1)],[0,0,0,1]]):
+A2:=Matrix([[cos(t(2,1)),-sin(t(2,1))*cos(f(2,1)),sin(t(2,1))*sin(f(2,1)),a(2,1)*cos(t(2,1))],[sin(t(2,1)),cos(t(2,1))*cos(f(2,1)),-cos(t(2,1))*sin(f(2,1)),a(2,1)*sin(t(2,1))],[0,sin(f(2,1)),cos(f(2,1)),d(2,1)],[0,0,0,1]]):
+A3:=Matrix([[cos(t(3,1)),-sin(t(3,1))*cos(f(3,1)),sin(t(3,1))*sin(f(3,1)),a(3,1)*cos(t(3,1))],[sin(t(3,1)),cos(t(3,1))*cos(f(3,1)),-cos(t(3,1))*sin(f(3,1)),a(3,1)*sin(t(3,1))],[0,sin(f(3,1)),cos(f(3,1)),d(3,1)],[0,0,0,1]]):
+A4:=Matrix([[cos(t(4,1)),-sin(t(4,1))*cos(f(4,1)),sin(t(4,1))*sin(f(4,1)),a(4,1)*cos(t(4,1))],[sin(t(4,1)),cos(t(4,1))*cos(f(4,1)),-cos(t(4,1))*sin(f(4,1)),a(4,1)*sin(t(4,1))],[0,sin(f(4,1)),cos(f(4,1)),d(4,1)],[0,0,0,1]]):
+A5:=Matrix([[cos(t(5,1)),-sin(t(5,1))*cos(f(5,1)),sin(t(5,1))*sin(f(5,1)),a(5,1)*cos(t(5,1))],[sin(t(5,1)),cos(t(5,1))*cos(f(5,1)),-cos(t(5,1))*sin(f(5,1)),a(5,1)*sin(t(5,1))],[0,sin(f(5,1)),cos(f(5,1)),d(5,1)],[0,0,0,1]]):
+A6:=Matrix([[cos(t(6,1)),-sin(t(6,1))*cos(f(6,1)),sin(t(6,1))*sin(f(6,1)),a(6,1)*cos(t(6,1))],[sin(t(6,1)),cos(t(6,1))*cos(f(6,1)),-cos(t(6,1))*sin(f(6,1)),a(6,1)*sin(t(6,1))],[0,sin(f(6,1)),cos(f(6,1)),d(6,1)],[0,0,0,1]]):
+A7:=Matrix([[cos(t(7,1)),-sin(t(7,1))*cos(f(7,1)),sin(t(7,1))*sin(f(7,1)),a(7,1)*cos(t(7,1))],[sin(t(7,1)),cos(t(7,1))*cos(f(7,1)),-cos(t(7,1))*sin(f(7,1)),a(7,1)*sin(t(7,1))],[0,sin(f(7,1)),cos(f(7,1)),d(7,1)],[0,0,0,1]]):
+#Transformation Matrix i about 0
+T1:=A1:
+T2:=MatrixMatrixMultiply(T1,A2):
+T3:=MatrixMatrixMultiply(T2,A3):
+T4:=MatrixMatrixMultiply(T3,A4):
+T5:=MatrixMatrixMultiply(T4,A5):
+T6:=MatrixMatrixMultiply(T5,A6):
+T7:=MatrixMatrixMultiply(T6,A7):
+#Rotation Matrix i about 0
+R0:=Matrix([[1,0,0],[0,1,0],[0,0,1]]):
+R1:=T1(1..3,1..3):
+R2:=T2(1..3,1..3):
+R3:=T3(1..3,1..3):
+R4:=T4(1..3,1..3):
+R5:=T5(1..3,1..3):
+R6:=T6(1..3,1..3):
+R7:=T7(1..3,1..3):
+#position of centeral mass link i about frame i-1
+rc1:=Vector[column]([0,0,ri(1)]):
+rc2:=Vector[column]([0,ri(2),0]):
+rc3:=Vector[column]([0,0,ri(3)]):
+rc4:=Vector[column]([0,ri(4),0]):
+rc5:=Vector[column]([0,0,ri(5)]):
+rc6:=Vector[column]([0,ri(6),0]):
+rc7:=Vector[column]([0,0,ri(7)]):
+#position of motor on the link i about frame i-1
+rm1:=Vector[column]([0,0,rm(1)]):
+rm2:=Vector[column]([0,rm(2),0]):
+rm3:=Vector[column]([0,0,rm(3)]):
+rm4:=Vector[column]([0,rm(4),0]):
+rm5:=Vector[column]([0,0,rm(5)]):
+rm6:=Vector[column]([0,rm(6),0]):
+rm7:=Vector[column]([0,0,rm(7)]):
+#position of central mass of link i about 0
+Rc1:=MatrixMatrixMultiply(R0,rc1):
+Rc2:=MatrixMatrixMultiply(R1,rc2):
+Rc3:=MatrixMatrixMultiply(R2,rc3):
+Rc4:=MatrixMatrixMultiply(R3,rc4):
+Rc5:=MatrixMatrixMultiply(R4,rc5):
+Rc6:=MatrixMatrixMultiply(R5,rc6):
+Rc7:=MatrixMatrixMultiply(R6,rc7):
+#position of motor of link i about 0
+Rm1:=MatrixMatrixMultiply(R0,rm1):
+Rm2:=MatrixMatrixMultiply(R1,rm2):
+Rm3:=MatrixMatrixMultiply(R2,rm3):
+Rm4:=MatrixMatrixMultiply(R3,rm4):
+Rm5:=MatrixMatrixMultiply(R4,rm5):
+Rm6:=MatrixMatrixMultiply(R5,rm6):
+Rm7:=MatrixMatrixMultiply(R6,rm7):
+#jacobian Matrix
+z0:=Transpose(Vector[column]([0,0,1])):
+z1:=Transpose(T1(1..3,3)):
+z2:=Transpose(T2(1..3,3)):
+z3:=Transpose(T3(1..3,3)):
+z4:=Transpose(T4(1..3,3)):
+z5:=Transpose(T5(1..3,3)):
+z6:=Transpose(T6(1..3,3)):
+z7:=Transpose(T7(1..3,3)):
+p0:=Transpose(Vector[column]([0,0,0])):
+p1:=Transpose(T1(1..3,4)):
+p2:=Transpose(T2(1..3,4)):
+p3:=Transpose(T3(1..3,4)):
+p4:=Transpose(T4(1..3,4)):
+p5:=Transpose(T5(1..3,4)):
+p6:=Transpose(T6(1..3,4)):
+p7:=Transpose(T7(1..3,4)):
+zero:=Vector[row]([0,0,0]):
+j7:=Transpose(Matrix([[crossprod(z0,matadd(p7,p0,1,-1)),z0],[crossprod(z1,matadd(p7,p1,1,-1)),z1],[ crossprod(z2,matadd(p7,p2,1,-1)),z2],[crossprod(z3,matadd(p7,p3,1,-1)),z3],[crossprod(z4,matadd(p7,p4,1,-1)),z4],[crossprod(z5,matadd(p7,p5,1,-1)),z5],[crossprod(z6,matadd(p7,p6,1,-1)),z6]])): #jacobian Matrix of end_effector
+j6:=Transpose(Matrix([[crossprod(z0,matadd(p6,p0,1,-1)),z0],[crossprod(z1,matadd(p6,p1,1,-1)),z1],[crossprod(z2,matadd(p6,p2,1,-1)),z2],[crossprod(z3,matadd(p6,p3,1,-1)),z3],[crossprod(z4,matadd(p6,p4,1,-1)),z4],[crossprod(z5,matadd(p6,p5,1,-1)),z5],[zero,zero]])): 
+j5:=Transpose(Matrix([[crossprod(z0,matadd(p5,p0,1,-1)),z0],[crossprod(z1,matadd(p5,p1,1,-1)),z1],[crossprod(z2,matadd(p5,p2,1,-1)),z2],[crossprod(z3,matadd(p5,p3,1,-1)),z3],[crossprod(z4,matadd(p5,p4,1,-1)),z4],[zero,zero],[zero,zero]])): 
+j4:=Transpose(Matrix([[crossprod(z0,matadd(p4,p0,1,-1)),z0],[crossprod(z1,matadd(p4,p1,1,-1)),z1],[crossprod(z2,matadd(p4,p2,1,-1)),z2],[crossprod(z3,matadd(p4,p3,1,-1)),z3],[zero,zero],[zero,zero],[zero,zero]])): 
+j3:=Transpose(Matrix([[crossprod(z0,matadd(p3,p0,1,-1)),z0],[crossprod(z1,matadd(p3,p1,1,-1)),z1],[crossprod(z2,matadd(p3,p2,1,-1)),z2],[zero,zero],[zero,zero],[zero,zero],[zero,zero]])): 
+j2:=Transpose(Matrix([[crossprod(z0,matadd(p2,p0,1,-1)),z0],[crossprod(z1,matadd(p2,p1,1,-1)),z1],[zero,zero],[zero,zero],[zero,zero],[zero,zero],[zero,zero]])): 
+j1:=Transpose(Matrix([[crossprod(z0,matadd(p1,p0,1,-1)),z0],[zero,zero],[zero,zero],[zero,zero],[zero,zero],[zero,zero],[zero,zero]])): 
+#link's center of mass's position
+pc1:=matadd(p0,Transpose(Rc1)):
+pc2:=matadd(p1,Transpose(Rc2)):
+pc3:=matadd(p2,Transpose(Rc3)):
+pc4:=matadd(p3,Transpose(Rc4)):
+pc5:=matadd(p4,Transpose(Rc5)):
+pc6:=matadd(p5,Transpose(Rc6)):
+pc7:=matadd(p6,Transpose(Rc7)):
+#link's motor's position
+pm1:=matadd(p0,Transpose(Rm1)):
+pm2:=matadd(p1,Transpose(Rm2)):
+pm3:=matadd(p2,Transpose(Rm3)):
+pm4:=matadd(p3,Transpose(Rm4)):
+pm5:=matadd(p4,Transpose(Rm5)):
+pm6:=matadd(p5,Transpose(Rm6)):
+pm7:=matadd(p6,Transpose(Rm7)):
+# jacobian Matrix of central mass of link i
+jc1:=Transpose(Matrix([[crossprod(z0,matadd(pc1,p0,1,-1)),z0],[zero,zero],[zero,zero],[zero,zero],[zero,zero],[zero,zero],[zero,zero]])):
+jc2:=Transpose(Matrix([[crossprod(z0,matadd(pc2,p0,1,-1)),z0],[crossprod(z1,matadd(pc2,p1,1,-1)),z1],[zero,zero],[zero,zero],[zero,zero],[zero,zero],[zero,zero]])):
+jc3:=Transpose(Matrix([[crossprod(z0,matadd(pc3,p0,1,-1)),z0],[crossprod(z1,matadd(pc3,p1,1,-1)),z1],[crossprod(z2,matadd(pc3,p2,1,-1)),z2],[zero,zero],[zero,zero],[zero,zero],[zero,zero]])):
+jc4:=Transpose(Matrix([[crossprod(z0,matadd(pc4,p0,1,-1)),z0],[crossprod(z1,matadd(pc4,p1,1,-1)),z1],[crossprod(z2,matadd(pc4,p2,1,-1)),z2],[crossprod(z3,matadd(pc4,p3,1,-1)),z3],[zero,zero],[zero,zero],[zero,zero]])):
+jc5:=Transpose(Matrix([[crossprod(z0,matadd(pc5,p0,1,-1)),z0],[crossprod(z1,matadd(pc5,p1,1,-1)),z1],[crossprod(z2,matadd(pc5,p2,1,-1)),z2],[crossprod(z3,matadd(pc5,p3,1,-1)),z3],[crossprod(z4,matadd(pc5,p4,1,-1)),z4],[zero,zero],[zero,zero]])):
+jc6:=Transpose(Matrix([[crossprod(z0,matadd(pc6,p0,1,-1)),z0],[crossprod(z1,matadd(pc6,p1,1,-1)),z1],[crossprod(z2,matadd(pc6,p2,1,-1)),z2],[crossprod(z3,matadd(pc6,p3,1,-1)),z3],[crossprod(z4,matadd(pc6,p4,1,-1)),z4],[crossprod(z5,matadd(pc6,p5,1,-1)),z5],[zero,zero]])):
+jc7:=Transpose(Matrix([[crossprod(z0,matadd(pc7,p0,1,-1)),z0],[crossprod(z1,matadd(pc7,p1,1,-1)),z1],[crossprod(z2,matadd(pc7,p2,1,-1)),z2],[crossprod(z3,matadd(pc7,p3,1,-1)),z3],[crossprod(z4,matadd(pc7,p4,1,-1)),z4],[crossprod(z5,matadd(pc7,p5,1,-1)),z5],[crossprod(z6,matadd(pc7,p6,1,-1)),z6]])):
+#motor's jacobian Matrix on center of link(reza tamum)(piter shuru)
+jm1:=Transpose(Matrix([[crossprod(z0,matadd(pm1,p0,1,-1)),kr1*z0],[zero,zero],[zero,zero],[zero,zero],[zero,zero],[zero,zero],[zero,zero]])):
+jm2:=Transpose(Matrix([[crossprod(z0,matadd(pm2,p0,1,-1)),z0],[crossprod(z1,matadd(pm2,p1,1,-1)),z1],[zero,kr3*z2],[zero,zero],[zero,zero],[zero,zero],[zero,zero]])):
+jm3:=Transpose(Matrix([[crossprod(z0,matadd(pm3,p0,1,-1)),z0],[crossprod(z1,matadd(pm3,p1,1,-1)),z1],[crossprod(z2,matadd(pm3,p2,1,-1)),kr3*z2],[zero,zero],[zero,zero],[zero,zero],[zero,zero]])):
+jm4:=Transpose(Matrix([[crossprod(z0,matadd(pm4,p0,1,-1)),z0],[crossprod(z1,matadd(pm4,p1,1,-1)),z1],[crossprod(z2,matadd(pm4,p2,1,-1)),z2],[crossprod(z3,matadd(pm4,p3,1,-1)),kr4*z3],[zero,zero],[zero,zero],[zero,zero]])):
+jm5:=Transpose(Matrix([[crossprod(z0,matadd(pm5,p0,1,-1)),z0],[crossprod(z1,matadd(pm5,p1,1,-1)),z1],[crossprod(z2,matadd(pm5,p2,1,-1)),z2],[crossprod(z3,matadd(pm5,p3,1,-1)),z3],[crossprod(z4,matadd(pm5,p4,1,-1)),kr5*z4],[zero,zero],[zero,zero]])):
+jm6:=Transpose(Matrix([[crossprod(z0,matadd(pm6,p0,1,-1)),z0],[crossprod(z1,matadd(pm6,p1,1,-1)),z1],[crossprod(z2,matadd(pm6,p2,1,-1)),z2],[crossprod(z3,matadd(pm6,p3,1,-1)),z3],[crossprod(z4,matadd(pm6,p4,1,-1)),z4],[crossprod(z5,matadd(pm6,p5,1,-1)),kr6*z5],[zero,zero]])):
+jm7:=Transpose(Matrix([[crossprod(z0,matadd(pm7,p0,1,-1)),z0],[crossprod(z1,matadd(pm7,p1,1,-1)),z1],[crossprod(z2,matadd(pm7,p2,1,-1)),z2],[crossprod(z3,matadd(pm7,p3,1,-1)),z3],[crossprod(z4,matadd(pm7,p4,1,-1)),z4],[crossprod(z5,matadd(pm7,p5,1,-1)),z5],[crossprod(z6,matadd(pm7,p6,1,-1)),z6]])):
+#gravity matrix
+g1:=-(m1*MatrixMatrixMultiply(Transpose(g0),jc1(1..3,1))+M1*MatrixMatrixMultiply(Transpose(g0),jm1(1..3,1))+m2*MatrixMatrixMultiply(Transpose(g0),jc2(1..3,1))+M2*MatrixMatrixMultiply(Transpose(g0),jm2(1..3,1))+m3*MatrixMatrixMultiply(Transpose(g0),jc3(1..3,1))+M3*MatrixMatrixMultiply(Transpose(g0),jm3(1..3,1))+m4*MatrixMatrixMultiply(Transpose(g0),jc4(1..3,1))+M4*MatrixMatrixMultiply(Transpose(g0),jm4(1..3,1))+m5*MatrixMatrixMultiply(Transpose(g0),jc5(1..3,1))+M5*MatrixMatrixMultiply(Transpose(g0),jm5(1..3,1))+m6*MatrixMatrixMultiply(Transpose(g0),jc6(1..3,1))+M6*MatrixMatrixMultiply(Transpose(g0),jm6(1..3,1))+m7*MatrixMatrixMultiply(Transpose(g0),jc7(1..3,1))+M7*MatrixMatrixMultiply(Transpose(g0),jm7(1..3,1))):
+g2:=-(m1*MatrixMatrixMultiply(Transpose(g0),jc1(1..3,2))+M1*MatrixMatrixMultiply(Transpose(g0),jm1(1..3,2))+m2*MatrixMatrixMultiply(Transpose(g0),jc2(1..3,2))+M2*MatrixMatrixMultiply(Transpose(g0),jm2(1..3,2))+m3*MatrixMatrixMultiply(Transpose(g0),jc3(1..3,2))+M3*MatrixMatrixMultiply(Transpose(g0),jm3(1..3,2))+m4*MatrixMatrixMultiply(Transpose(g0),jc4(1..3,2))+M4*MatrixMatrixMultiply(Transpose(g0),jm4(1..3,2))+m5*MatrixMatrixMultiply(Transpose(g0),jc5(1..3,2))+M5*MatrixMatrixMultiply(Transpose(g0),jm5(1..3,2))+m6*MatrixMatrixMultiply(Transpose(g0),jc6(1..3,2))+M6*MatrixMatrixMultiply(Transpose(g0),jm6(1..3,2))+m7*MatrixMatrixMultiply(Transpose(g0),jc7(1..3,2))+M7*MatrixMatrixMultiply(Transpose(g0),jm7(1..3,2))):
+g3:=-(m1*MatrixMatrixMultiply(Transpose(g0),jc1(1..3,3))+M1*MatrixMatrixMultiply(Transpose(g0),jm1(1..3,3))+m2*MatrixMatrixMultiply(Transpose(g0),jc2(1..3,3))+M2*MatrixMatrixMultiply(Transpose(g0),jm2(1..3,3))+m3*MatrixMatrixMultiply(Transpose(g0),jc3(1..3,3))+M3*MatrixMatrixMultiply(Transpose(g0),jm3(1..3,3))+m4*MatrixMatrixMultiply(Transpose(g0),jc4(1..3,3))+M4*MatrixMatrixMultiply(Transpose(g0),jm4(1..3,3))+m5*MatrixMatrixMultiply(Transpose(g0),jc5(1..3,3))+M5*MatrixMatrixMultiply(Transpose(g0),jm5(1..3,3))+m6*MatrixMatrixMultiply(Transpose(g0),jc6(1..3,3))+M6*MatrixMatrixMultiply(Transpose(g0),jm6(1..3,3))+m7*MatrixMatrixMultiply(Transpose(g0),jc7(1..3,3))+M7*MatrixMatrixMultiply(Transpose(g0),jm7(1..3,3))):
+g4:=-(m1*MatrixMatrixMultiply(Transpose(g0),jc1(1..3,4))+M1*MatrixMatrixMultiply(Transpose(g0),jm1(1..3,4))+m2*MatrixMatrixMultiply(Transpose(g0),jc2(1..3,4))+M2*MatrixMatrixMultiply(Transpose(g0),jm2(1..3,4))+m3*MatrixMatrixMultiply(Transpose(g0),jc3(1..3,4))+M3*MatrixMatrixMultiply(Transpose(g0),jm3(1..3,4))+m4*MatrixMatrixMultiply(Transpose(g0),jc4(1..3,4))+M4*MatrixMatrixMultiply(Transpose(g0),jm4(1..3,4))+m5*MatrixMatrixMultiply(Transpose(g0),jc5(1..3,4))+M5*MatrixMatrixMultiply(Transpose(g0),jm5(1..3,4))+m6*MatrixMatrixMultiply(Transpose(g0),jc6(1..3,4))+M6*MatrixMatrixMultiply(Transpose(g0),jm6(1..3,4))+m7*MatrixMatrixMultiply(Transpose(g0),jc7(1..3,4))+M7*MatrixMatrixMultiply(Transpose(g0),jm7(1..3,4))):
+g5:=-(m1*MatrixMatrixMultiply(Transpose(g0),jc1(1..3,5))+M1*MatrixMatrixMultiply(Transpose(g0),jm1(1..3,5))+m2*MatrixMatrixMultiply(Transpose(g0),jc2(1..3,5))+M2*MatrixMatrixMultiply(Transpose(g0),jm2(1..3,5))+m3*MatrixMatrixMultiply(Transpose(g0),jc3(1..3,5))+M3*MatrixMatrixMultiply(Transpose(g0),jm3(1..3,5))+m4*MatrixMatrixMultiply(Transpose(g0),jc4(1..3,5))+M4*MatrixMatrixMultiply(Transpose(g0),jm4(1..3,5))+m5*MatrixMatrixMultiply(Transpose(g0),jc5(1..3,5))+M5*MatrixMatrixMultiply(Transpose(g0),jm5(1..3,5))+m6*MatrixMatrixMultiply(Transpose(g0),jc6(1..3,5))+M6*MatrixMatrixMultiply(Transpose(g0),jm6(1..3,5))+m7*MatrixMatrixMultiply(Transpose(g0),jc7(1..3,5))+M7*MatrixMatrixMultiply(Transpose(g0),jm7(1..3,5))):
+g6:=-(m1*MatrixMatrixMultiply(Transpose(g0),jc1(1..3,6))+M1*MatrixMatrixMultiply(Transpose(g0),jm1(1..3,6))+m2*MatrixMatrixMultiply(Transpose(g0),jc2(1..3,6))+M2*MatrixMatrixMultiply(Transpose(g0),jm2(1..3,6))+m3*MatrixMatrixMultiply(Transpose(g0),jc3(1..3,6))+M3*MatrixMatrixMultiply(Transpose(g0),jm3(1..3,6))+m4*MatrixMatrixMultiply(Transpose(g0),jc4(1..3,6))+M4*MatrixMatrixMultiply(Transpose(g0),jm4(1..3,6))+m5*MatrixMatrixMultiply(Transpose(g0),jc5(1..3,6))+M5*MatrixMatrixMultiply(Transpose(g0),jm5(1..3,6))+m6*MatrixMatrixMultiply(Transpose(g0),jc6(1..3,6))+M6*MatrixMatrixMultiply(Transpose(g0),jm6(1..3,6))+m7*MatrixMatrixMultiply(Transpose(g0),jc7(1..3,6))+M7*MatrixMatrixMultiply(Transpose(g0),jm7(1..3,6))):
+g7:=-(m1*MatrixMatrixMultiply(Transpose(g0),jc1(1..3,7))+M1*MatrixMatrixMultiply(Transpose(g0),jm1(1..3,7))+m2*MatrixMatrixMultiply(Transpose(g0),jc2(1..3,7))+M2*MatrixMatrixMultiply(Transpose(g0),jm2(1..3,7))+m3*MatrixMatrixMultiply(Transpose(g0),jc3(1..3,7))+M3*MatrixMatrixMultiply(Transpose(g0),jm3(1..3,7))+m4*MatrixMatrixMultiply(Transpose(g0),jc4(1..3,7))+M4*MatrixMatrixMultiply(Transpose(g0),jm4(1..3,7))+m5*MatrixMatrixMultiply(Transpose(g0),jc5(1..3,7))+M5*MatrixMatrixMultiply(Transpose(g0),jm5(1..3,7))+m6*MatrixMatrixMultiply(Transpose(g0),jc6(1..3,7))+M6*MatrixMatrixMultiply(Transpose(g0),jm6(1..3,7))+m7*MatrixMatrixMultiply(Transpose(g0),jc7(1..3,7))+M7*MatrixMatrixMultiply(Transpose(g0),jm7(1..3,7))):
+g:=Vector[column]([g1,g2,g3,g4,g5,g6,g7]):
+g
+#Mass Matrix
+b1:=(m1*MatrixMatrixMultiply(Transpose(jc1(1..3,..)),jc1(1..3,..))+I1*MatrixMatrixMultiply(Transpose(jc1(4..6,..)),Multiply(R1,Multiply(Transpose(R1),jc1(4..6,..))))+M1*MatrixMatrixMultiply(Transpose(jm1(1..3,..)),jm1(1..3,..))+IM1*MatrixMatrixMultiply(Transpose(jm1(4..6,..)),Multiply((R1),Multiply(Transpose(R1),jm1(4..6,..))))):
+b2:=(m2*MatrixMatrixMultiply(Transpose(jc2(1..3,..)),jc2(1..3,..))+I2*MatrixMatrixMultiply(Transpose(jc2(4..6,..)),Multiply(R2,Multiply(Transpose(R2),jc2(4..6,..))))+M2*MatrixMatrixMultiply(Transpose(jm2(1..3,..)),jm2(1..3,..))+IM2*MatrixMatrixMultiply(Transpose(jm2(4..6,..)),Multiply((R2),Multiply(Transpose(R2),jm2(4..6,..))))):
+b3:=(m3*MatrixMatrixMultiply(Transpose(jc3(1..3,..)),jc3(1..3,..))+I3*MatrixMatrixMultiply(Transpose(jc3(4..6,..)),Multiply(R3,Multiply(Transpose(R3),jc3(4..6,..))))+M3*MatrixMatrixMultiply(Transpose(jm3(1..3,..)),jm3(1..3,..))+IM3*MatrixMatrixMultiply(Transpose(jm3(4..6,..)),Multiply((R3),Multiply(Transpose(R3),jm3(4..6,..))))):
+b4:=(m4*MatrixMatrixMultiply(Transpose(jc4(1..3,..)),jc4(1..3,..))+I4*MatrixMatrixMultiply(Transpose(jc4(4..6,..)),Multiply(R4,Multiply(Transpose(R4),jc4(4..6,..))))+M4*MatrixMatrixMultiply(Transpose(jm4(1..3,..)),jm4(1..3,..))+IM4*MatrixMatrixMultiply(Transpose(jm4(4..6,..)),Multiply((R4),Multiply(Transpose(R4),jm4(4..6,..))))):
+b5:=(m5*MatrixMatrixMultiply(Transpose(jc5(1..3,..)),jc5(1..3,..))+I5*MatrixMatrixMultiply(Transpose(jc5(4..6,..)),Multiply(R5,Multiply(Transpose(R5),jc5(4..6,..))))+M5*MatrixMatrixMultiply(Transpose(jm5(1..3,..)),jm5(1..3,..))+IM5*MatrixMatrixMultiply(Transpose(jm5(4..6,..)),Multiply((R5),Multiply(Transpose(R5),jm5(4..6,..))))):
+b6:=(m6*MatrixMatrixMultiply(Transpose(jc6(1..3,..)),jc6(1..3,..))+I6*MatrixMatrixMultiply(Transpose(jc6(4..6,..)),Multiply(R6,Multiply(Transpose(R6),jc6(4..6,..))))+M6*MatrixMatrixMultiply(Transpose(jm6(1..3,..)),jm6(1..3,..))+IM6*MatrixMatrixMultiply(Transpose(jm6(4..6,..)),Multiply((R6),Multiply(Transpose(R6),jm6(4..6,..))))):
+b7:=(m7*MatrixMatrixMultiply(Transpose(jc7(1..3,..)),jc7(1..3,..))+I7*MatrixMatrixMultiply(Transpose(jc7(4..6,..)),Multiply(R7,Multiply(Transpose(R7),jc7(4..6,..))))+M7*MatrixMatrixMultiply(Transpose(jm7(1..3,..)),jm7(1..3,..))+IM7*MatrixMatrixMultiply(Transpose(jm7(4..6,..)),Multiply((R7),Multiply(Transpose(R7),jm7(4..6,..))))):
+M:=matadd(b1,b2,b3,b4,b5,b6,b7):
+M_inv=MatrixInverse(M):
+#C Matrix
+c:=Array(1..7,1..7,1..7):
+C=Matrix(7):
+for k from 1 to 7 do
+    for i from 1 to 7 do
+        for j from 1 to 7 do
+             a:=Diff(M(i,j),q(k)):
+             b:=Diff(M(i,k),q(j)):
+             d:=Diff(M(j,k),q(i)):
+             c(i,j,k):=0.5*simplify(a+b-c):
+         end do 
+     end do
+end do
+for i from 1 to 7 do
+    for j from 1 to 7 do
+        for k from 1 to 7 do
+            C(i,j):=c(i,j,k)*dq(k)+C(i,j):
+        end do
+    end do
+end do
+CodeGeneration[Matlab](j7, resultname = "J", output = "dynamic.m"):
+CodeGeneration[Matlab](g, resultname = "g", output = "dynamic.m"):
+CodeGeneration[Matlab](M, resultname = "M", output = "dynamic.m"):
+CodeGeneration[Matlab](M_inv, resultname = "M_inv", output = "dynamic.m"):
+CodeGeneration[Matlab](C, resultname = "C", output = "dynamic.m"):

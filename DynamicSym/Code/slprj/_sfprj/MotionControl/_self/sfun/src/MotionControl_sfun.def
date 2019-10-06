@@ -1,0 +1,3 @@
+LIBRARY MotionControl_sfun.mexw64
+EXPORTS
+mexFunction
